@@ -1,0 +1,20 @@
+<%- include("header.ejs")%>
+
+<div class="main">
+    <div class="box" id="heading">
+        <h1 id="heading">Work List</h1>
+    </div>
+    <%- include("function.ejs")  %>
+    <div class="element">
+        <form action="/work.ejs" method="post">
+            <input type="text" name="newItem" id="newItem" placeholder="New Item" autocomplete="off">
+            <input type="submit" value="+" id="submit">
+        </form>
+        </div>
+    </div>
+    
+</div>
+<div><%- include("footer.ejs")%></div>
+</div>
+</html>
+

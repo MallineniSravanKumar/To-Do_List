@@ -1,0 +1,37 @@
+
+
+<%- include("header.ejs")%>
+
+<% const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const d = new Date();
+let day = weekday[d.getDay()];
+let monthName = month[d.getMonth()];
+let date = d.getDate();%> 
+    
+
+    <div class="main">
+        <div class="box" id="heading">
+            <h1 id="heading"><%= day%>, <%= monthName%> <%= date%></h1>
+        </div>
+        <%- include("function.ejs")  %>
+        <div class="element">
+            <form action="/" method="post">
+                <input type="text" name="newItem" id="newItem" placeholder="New Item" autocomplete="off">
+                <input type="submit" value="+" id="submit">
+            </form>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+    
+    
+    
+    <%- include("footer.ejs")%>
+       
+       
+</body>    
+
+</html>

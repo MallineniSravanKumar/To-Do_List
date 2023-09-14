@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    
+    <a href="/"><img src="/calendar.png" alt="calendar image">Today</a>
+    <a href="/work.ejs"><img src="/briefcase.png" alt="calendar image">Work</a>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+          $(document).ready(function() {
+          $('input[type="checkbox"]').click(function() {
+              if($(this).prop("checked") == true) {
+                // alert(this["name"]);
+                var checkName = this["name"];
+                $('label[for = "'+checkName+'"]').addClass("check");
+              }
+              else if($(this).prop("checked") == false) {
+                // alert("Checkbox is unchecked.");
+                var checkName = this["name"];
+                $('label[for = "'+checkName+'"]').removeClass("check");
+              }
+            });
+        });
+
+ 
+</script>
