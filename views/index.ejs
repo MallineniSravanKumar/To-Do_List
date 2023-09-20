@@ -21,15 +21,12 @@ let date = d.getDate();%>
                     <input type="checkbox" name="check0" class="check">
                     <label for="check0" >This is To-Do List for Today</label>
                 </div><hr>
-                <div class="element">
-                    <input type="checkbox" name="check1" class="check">
-                    <label for="check1">Sravan</label>
-                </div><hr>
+                
                 <% if(locals.item){%>
                 <% for (let i=0; i< item.length;i++){%>
                 <div class="element">
                     <input type="checkbox" name="check<%= i%><%= i%>" class="check">
-                    <label for="check<%= i%><%= i%>"><%= item[i]%></label>
+                    <label for="check<%= i%><%= i%>"><%= item[i].listName%></label>
                     
                 </div><hr>
                 <%}}%>
