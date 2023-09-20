@@ -1,35 +1,83 @@
 import express from "express";
 import bodyParser from "body-parser";
+import mongoose from "mongoose";
 
 const port = 3000;
 const app = express();
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+
+mongoose.connect("mongodb://localhost:27017/listDB");
+const listSchema = new mongoose.Schema({
+    listName: String
+});
+
+const lis = mongoose.model("list",listSchema);
+const worklis = mongoose.model("worklist",listSchema);
+
 var items = [];
 var newDir ="";
 var workItems=[];
-app.get("/",(req,res)=>{
-    res.render("index.ejs",{item : items});
+app.get("/",async(req,res)=>{
+    
+    await lis.find().then((p)=> {
+        // mongoose.connection.close();
+        p.forEach((i)=> {console.log(i.listName)});
+        res.render("index.ejs",{item : p});
+    
+    }).catch((err)=>{console.log("Something went wrong");});
+    
 });
 
-app.get("/work.ejs",(req,res)=>{
-    res.render("work.ejs",{item : workItems});
+app.get("/work.ejs",async(req,res)=>{
+    await worklis.find().then((w)=>{
+        w.forEach((i)=>{console.log(i.listName)});
+        res.render("work.ejs",{item : w});
+    }).catch((err)=>{});
+    
 });
 
-app.post("/",(req,res)=>{
-    items.push(req.body["newItem"]);
-    res.render("index.ejs",{item : items});
+app.post("/",async(req,res)=>{
+    items=[];
+    var list = new lis({
+        listName:req.body["newItem"],
+    });
+
+    
+    await list.save().then(()=>{console.log()}).catch((error)=>{console.log("Please add a text to to do list")});
+    await lis.find().then((p)=> {
+        // mongoose.connection.close();
+        p.forEach((i)=> {console.log(i.listName)});
+        res.render("index.ejs",{item : p});
+    
+    }).catch((err)=>{console.log("Something went wrong");});
+    
+    
+
+    // console.log(list);
+    // items.push(req.body["newItem"]);
+    // res.render("index.ejs",{item : items});
     
     console.log(items);
 
 });
 
-app.post("/work.ejs",(req,res)=>{
-    workItems.push(req.body["newItem"]);
-    res.render("work.ejs",{item : workItems});
+app.post("/work.ejs",async(req,res)=>{
+    var workl = new worklis({
+        listName: req.body["newItem"]
+    });
     
-    console.log(items);
+    await workl.save().then(()=>{console.log("Worklist element is added");}).catch((err)=>{console.log(err);});
+
+    await worklis.find().then(
+        (w)=>{
+            w.forEach((i)=> {console.log(i.listName);});
+            res.render("work.ejs",{item : w});
+        }
+        ).catch((err)=>{
+            console.log(err);
+        });
 
 });
 
